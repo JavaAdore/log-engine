@@ -1,0 +1,39 @@
+#server port set to zero intentionally to use random one
+server:
+ port: 7777
+
+spring:
+ application:
+  name: log-engine
+ cloud:
+  config:
+     uri: http://${CONFIG_SERVER_IP}:${CONFIG_SERVER_PORT}
+ zipkin:
+  baseUrl: http://${ZIPKIN_SERVER_IP}:${ZIPKIN_SERVER_PORT}/
+ sleuth:
+  sampler:
+   probability: 1
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://${EUREKA_SERVER_IP}:${EUREKA_SERVER_PORT}/eureka/
+      
+      
+ 
+logging:
+ level:
+  org:
+   springframework:
+    cloud:
+     sleuth: ${SLEUTH_LOGGING_LEVEL}
+
+hystrix:
+  command:
+    default:
+      execution:
+        timeout:
+         enabled: false
+        isolation:
+          thread:
+            timeoutInMilliseconds: 60000
